@@ -44,6 +44,7 @@ booking:{
     proofPayment: string,
     bankFrom: string,
     accountHolder: string,
+    status: string,
     memberId: [{_id: ObjectId}],
     bankId: [{_id: ObjectId}],
 }
