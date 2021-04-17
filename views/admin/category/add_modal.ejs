@@ -22,11 +22,12 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form>
+			<form action="/admin/category" method="POST">
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="name">Name</label>
 						<input
+							name="name"
 							type="text"
 							class="form-control"
 							id="name"
@@ -38,7 +39,7 @@
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">
 						Close
 					</button>
-					<button type="button" class="btn btn-primary">Save changes</button>
+					<button type="submit" class="btn btn-primary">Save changes</button>
 				</div>
 			</form>
 		</div>
