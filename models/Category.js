@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const categorySchema = new Schema({
+	id: Object,
 	name: {
 		type: String,
 		required: true,
