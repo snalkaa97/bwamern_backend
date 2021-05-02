@@ -30,17 +30,26 @@
 						<td><%= index+1 %></td>
 						<td><%= item.name %></td>
 						<td>
-							<a
-								href="javascript:void()"
-								type="button"
-								class="btn btn-warning btn-circle btn-sm button-update"
-								data-id="<%= item._id %>"
-								data-name="<%= item.name %>"
-								><i class="fas fa-edit"></i
-							></a>
-							<a href="" class="btn btn-danger btn-circle btn-sm"
-								><i class="fas fa-trash"></i
-							></a>
+							<form
+								action="/admin/category/<%= item._id %>?_method=DELETE"
+								method="POST"
+							>
+								<a
+									href="javascript:void()"
+									type="button"
+									class="btn btn-warning btn-circle btn-sm button-update"
+									data-id="<%= item._id %>"
+									data-name="<%= item.name %>"
+									><i class="fas fa-edit"></i
+								></a>
+								<button
+									type="submit"
+									href=""
+									class="btn btn-danger btn-circle btn-sm"
+								>
+									<i class="fas fa-trash"></i>
+								</button>
+							</form>
 						</td>
 					</tr>
 					<%})%>
