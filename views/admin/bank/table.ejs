@@ -1,6 +1,13 @@
 <div class="card shadow mb-4">
 	<div class="card-header py-3">
-		<h6 class="m-0 font-weight-bold text-primary"><%= title %></h6>
+		<button
+			type="button"
+			class="btn btn-primary"
+			data-toggle="modal"
+			data-target="#exampleModal"
+		>
+			<i class="fas fa-plus"></i>
+		</button>
 	</div>
 	<div class="card-body">
 		<div class="table-responsive">
@@ -19,6 +26,38 @@
 						<th>Action</th>
 					</tr>
 				</thead>
+				<tbody>
+					<% banks.map((item, index)=>{ %>
+					<tr>
+						<td><%= index+1 %></td>
+						<td><%= item.nameBank %></td>
+						<td><%= item.nomorRekening %></td>
+						<td><%= item.name %></td>
+						<td>
+							<form
+								action="/admin/bank/<%= item._id %>?_method=DELETE"
+								method="POST"
+							>
+								<a
+									href="javascript:void()"
+									type="button"
+									class="btn btn-warning btn-circle btn-sm button-update"
+									data-id="<%= item._id %>"
+									data-name="<%= item.name %>"
+									><i class="fas fa-edit"></i
+								></a>
+								<button
+									type="submit"
+									href=""
+									class="btn btn-danger btn-circle btn-sm"
+								>
+									<i class="fas fa-trash"></i>
+								</button>
+							</form>
+						</td>
+					</tr>
+					<%})%>
+				</tbody>
 			</table>
 		</div>
 	</div>
