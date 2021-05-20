@@ -128,6 +128,21 @@ module.exports = {
 			res.redirect("/admin/bank");
 		}
 	},
+	deleteBank: async (req, res) => {
+		try {
+			const { id } = req.params;
+			const bank = await Bank.findOne({ _id: id });
+			await fs.unlink(path.join(`public/${bank.imageUrl}`));
+			await bank.remove();
+			req.flash("alertMessage", "Berhasil dihapus");
+			req.flash("alertStatus", "success");
+			res.redirect("/admin/bank");
+		} catch (error) {
+			req.flash("alertMessage", "Gagal diupdate");
+			req.flash("alertStatus", "danger");
+			res.redirect("/admin/bank");
+		}
+	},
 	viewItem: (req, res) => {
 		res.render("admin/item/view", { title: "Item" });
 	},
