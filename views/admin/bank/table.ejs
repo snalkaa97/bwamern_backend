@@ -22,7 +22,8 @@
 						<th>No</th>
 						<th>Nama Bank</th>
 						<th>Rekening</th>
-						<th>Nama Pemilik</th>
+						<th>Name</th>
+						<th>Image</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -34,16 +35,27 @@
 						<td><%= item.nomorRekening %></td>
 						<td><%= item.name %></td>
 						<td>
+							<img
+								src="http://localhost:3000/<%= item.imageUrl %>"
+								alt=""
+								srcset=""
+								width="70px"
+								height="70px"
+							/>
+						</td>
+						<td>
 							<form
 								action="/admin/bank/<%= item._id %>?_method=DELETE"
 								method="POST"
 							>
 								<a
-									href="javascript:void()"
+									href="javascript:void();"
 									type="button"
 									class="btn btn-warning btn-circle btn-sm button-update"
 									data-id="<%= item._id %>"
 									data-name="<%= item.name %>"
+									data-bank="<%= item.nameBank %>"
+									data-rekening="<%= item.nomorRekening %>"
 									><i class="fas fa-edit"></i
 								></a>
 								<button
