@@ -33,7 +33,7 @@ module.exports = {
 			req.flash("alertStatus", "success");
 			res.redirect("/admin/category");
 		} catch (error) {
-			req.flash("alertMessage", "Gagal ditambahkan");
+			req.flash("alertMessage", `${error.message}`);
 			req.flash("alertStatus", "danger");
 			res.redirect("/admin/category");
 		}
@@ -48,7 +48,7 @@ module.exports = {
 			req.flash("alertStatus", "success");
 			res.redirect("/admin/category");
 		} catch (error) {
-			req.flash("alertMessage", "Gagal diupdate");
+			req.flash("alertMessage", `${error.message}`);
 			req.flash("alertStatus", "danger");
 			res.redirect("/admin/category");
 		}
@@ -62,7 +62,7 @@ module.exports = {
 			req.flash("alertStatus", "success");
 			res.redirect("/admin/category");
 		} catch (error) {
-			req.flash("alertMessage", "Gagal diupdate");
+			req.flash("alertMessage", `${error.message}`);
 			req.flash("alertStatus", "danger");
 			res.redirect("/admin/category");
 		}
@@ -95,7 +95,7 @@ module.exports = {
 			req.flash("alertStatus", "success");
 			res.redirect("/admin/bank");
 		} catch (error) {
-			req.flash("alertMessage", "Gagal ditambahkan");
+			req.flash("alertMessage", `${error.message}`);
 			req.flash("alertStatus", "danger");
 			res.redirect("/admin/bank");
 		}
@@ -125,7 +125,7 @@ module.exports = {
 				res.redirect("/admin/bank");
 			}
 		} catch (error) {
-			req.flash("alertMessage", "Gagal diupdate");
+			req.flash("alertMessage", `${error.message}`);
 			req.flash("alertStatus", "danger");
 			res.redirect("/admin/bank");
 		}
@@ -140,13 +140,16 @@ module.exports = {
 			req.flash("alertStatus", "success");
 			res.redirect("/admin/bank");
 		} catch (error) {
-			req.flash("alertMessage", "Gagal diupdate");
+			req.flash("alertMessage", `${error.message}`);
 			req.flash("alertStatus", "danger");
 			res.redirect("/admin/bank");
 		}
 	},
 	viewItem: async (req, res) => {
 		try {
+			const items = await Item.find()
+				.populate({ path: "imageId", select: "id imageUrl" })
+				.populate({ path: "categoryId", select: "id name" });
 			const categories = await Category.find({});
 			const alertMessage = req.flash("alertMessage");
 			const alertStatus = req.flash("alertStatus");
@@ -155,6 +158,8 @@ module.exports = {
 				title: "Item",
 				categories: categories,
 				alert,
+				items,
+				action: "view",
 			});
 		} catch (error) {
 			res.redirect("/admin/item");
@@ -178,7 +183,7 @@ module.exports = {
 
 				for (let i = 0; i < req.files.length; i++) {
 					const imageSave = await Image.create({
-						imageUrl: `image/${req.files[i].filename}`,
+						imageUrl: `images/${req.files[i].filename}`,
 					});
 					item.imageId.push({ _id: imageSave._id });
 					await item.save();
@@ -188,8 +193,29 @@ module.exports = {
 				res.redirect("/admin/item");
 			}
 		} catch (error) {
-			console.log(error);
-			req.flash("alertMessage", "Gagal ditambahkan");
+			req.flash("alertMessage", `${error.message}`);
+			req.flash("alertStatus", "danger");
+			res.redirect("/admin/item");
+		}
+	},
+	showImageItem: async (req, res) => {
+		try {
+			const { id } = req.params;
+			const items = await Item.findOne({ _id: id }).populate({
+				path: "imageId",
+				select: "id imageUrl",
+			});
+			const alertMessage = req.flash("alertMessage");
+			const alertStatus = req.flash("alertStatus");
+			const alert = { alertMessage, alertStatus };
+			res.render("admin/item/view", {
+				title: "Show Image Item",
+				alert,
+				items,
+				action: "show image",
+			});
+		} catch (error) {
+			req.flash("alertMessage", `${error.message}`);
 			req.flash("alertStatus", "danger");
 			res.redirect("/admin/item");
 		}
