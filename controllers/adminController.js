@@ -194,7 +194,9 @@ module.exports = {
 			res.redirect("/admin/item");
 		}
 	},
-	editItem: async (req, res) => {},
+	editItem: async (req, res) => {
+		console.log("test");
+	},
 	deleteItem: async (req, res) => {},
 	viewBooking: (req, res) => {
 		res.render("admin/booking/view", { title: "Booking" });
