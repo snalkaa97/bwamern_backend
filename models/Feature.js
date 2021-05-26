@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
-
+const { ObjectId } = mongoose.Schema;
 const featureSchema = new Schema({
 	name: {
 		type: String,
@@ -13,6 +13,10 @@ const featureSchema = new Schema({
 	qty: {
 		type: Number,
 		required: true,
+	},
+	itemId: {
+		type: ObjectId,
+		ref: Item,
 	},
 });
 

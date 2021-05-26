@@ -1,5 +1,6 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
+const { ObjectId } = mongoose.Schema;
 
 const itemSchema = new Schema({
 	title: {
@@ -21,10 +22,15 @@ const itemSchema = new Schema({
 	},
 	isPopular: {
 		type: Boolean,
+		default: false,
 	},
-	decription: {
+	description: {
 		type: String,
 		required: true,
+	},
+	categoryId: {
+		type: ObjectId,
+		ref: "Category",
 	},
 	imageId: [
 		{
